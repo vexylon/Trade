@@ -1,0 +1,9 @@
+name: Trade
+version: '${project.version}'
+main: bless.trade.Trade
+api-version: 1.18
+authors: [ Cr3sis ]
+description: Trade menu like hypixel
+commands:
+  Trade:
+    description: A Command for trade

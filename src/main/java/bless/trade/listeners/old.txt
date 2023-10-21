@@ -1,0 +1,121 @@
+package bless.trade.listeners;
+
+import bless.trade.Trade;
+import bless.trade.commands.TradeComand;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
+
+import static bless.trade.commands.TradeComand.inven1;
+import static bless.trade.commands.TradeComand.inven2;
+
+public class MenuListener implements Listener {
+
+    int[] slots1 = new int[16];
+
+    @EventHandler
+    public void onMenuCLick(InventoryClickEvent e) throws InterruptedException {
+
+        boolean first = false;
+        boolean sec = false;
+
+        Map<String, int[]> map = new TreeMap<String, int[]>();
+
+        Player p1 = null;
+        Player p2 = null;
+
+        slots1[0] = 0;
+        slots1[1] = 1;
+        slots1[2] = 2;
+        slots1[3] = 3;
+        slots1[4] = 9;
+        slots1[5] = 10;
+        slots1[6] = 11;
+        slots1[7] = 12;
+        slots1[8] = 18;
+        slots1[9] = 19;
+        slots1[10] = 20;
+        slots1[11] = 21;
+        slots1[12] = 27;
+        slots1[13] = 28;
+        slots1[14] = 29;
+        slots1[15] = 30;
+
+        if(e.getView().getTitle().equalsIgnoreCase(ChatColor.GRAY + "You                Other")){
+            if(e.getCurrentItem().getType() == Material.ORANGE_TERRACOTTA){
+                inven2.setItem(41,new ItemStack(Material.LIME_DYE));
+                if(e.getClickedInventory().getItem(41).getType() == Material.LIME_DYE){
+
+                    System.out.println("traded");
+                    if(e.getInventory().getItem(5) != null){
+                        e.getWhoClicked().getInventory().addItem(e.getInventory().getItem(5));
+                    } else if (e.getInventory().getItem(0) != null) {
+                        Trade.p2.getInventory().addItem(e.getInventory().getItem(0));
+                    }
+
+                    if(e.getInventory().getItem(0) != null){e.getInventory().removeItem(e.getInventory().getItem(0));}
+                    inven2.removeItem(e.getInventory().getItem(5));
+                    Trade.p2.closeInventory();
+                    e.getWhoClicked().closeInventory();
+                }
+            }
+            e.setCancelled(true);
+        }
+        if(e.getView().getTitle().equalsIgnoreCase(ChatColor.GRAY + "You                Other2")){
+            Trade.p2 = (Player) e.getWhoClicked();
+            if(e.getCurrentItem().getType() == Material.ORANGE_TERRACOTTA){
+                inven1.setItem(41,new ItemStack(Material.LIME_DYE));
+                if(e.getClickedInventory().getItem(41).getType() == Material.LIME_DYE){
+
+                    System.out.println("traded");
+                    if(e.getInventory().getItem(5) != null){
+                        e.getWhoClicked().getInventory().addItem(e.getInventory().getItem(5));
+                    } else if (e.getInventory().getItem(0) != null) {
+                        Trade.p1.getInventory().addItem(e.getInventory().getItem(0));
+                    }
+
+                    if(e.getClickedInventory().getItem(0) != null){e.getClickedInventory().removeItem(e.getInventory().getItem(0));}
+                    inven1.removeItem(e.getInventory().getItem(5));
+                    Trade.p1.closeInventory();
+                    e.getWhoClicked().closeInventory();
+                }
+            }
+            e.setCancelled(true);
+        }
+        if(e.getWhoClicked().getOpenInventory().getTitle().equalsIgnoreCase(ChatColor.GRAY + "You                Other")){
+            if(e.getCurrentItem() == null){ return; }
+            if(e.getClickedInventory() == e.getInventory()){ return; }
+
+            ItemStack item = e.getCurrentItem();
+            inven2.setItem(5,item);
+            e.getInventory().addItem(item);
+
+            e.getWhoClicked().getInventory().removeItem(item);
+
+            e.setCancelled(true);
+        }
+        if(e.getWhoClicked().getOpenInventory().getTitle().equalsIgnoreCase(ChatColor.GRAY + "You                Other2")){
+            if(e.getCurrentItem() == null){ return; }
+            if(e.getClickedInventory() == e.getInventory()){ return; }
+
+            Trade.p2 = (Player) e.getWhoClicked();
+
+            ItemStack item = e.getCurrentItem();
+            inven1.setItem(5,item);
+            e.getInventory().addItem(item);
+
+            e.getWhoClicked().getInventory().removeItem(item);
+
+            e.setCancelled(true);
+        }
+    }
+}

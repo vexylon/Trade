@@ -1,0 +1,9 @@
+name: Trade
+version: '1.0-SNAPSHOT'
+main: bless.trade.Trade
+api-version: 1.18
+authors: [ Bless ]
+description: Trade menu like hypixel
+commands:
+  Trade:
+    description: A Command for trade

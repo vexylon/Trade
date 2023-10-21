@@ -1,0 +1,4 @@
+bless\trade\commands\TradeComand.class
+bless\trade\listeners\MenuListener.class
+bless\trade\listeners\InventoryClose.class
+bless\trade\Trade.class
